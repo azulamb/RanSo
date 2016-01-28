@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ranso</title>
+<meta name="viewport" content="width=640">
+<meta name="keywords" content="ランダム,ソート,並び替え,発表順">
+<style>
+html{height:100%;}
+body{height:100%;}
+body > div{width:100%;position:relative;height:auto !important;height:100%;min-height:100%;}
+header{text-align:center;}
+article{padding-bottom:20px;width:640px;margin:20px auto;}
+textarea{width:100%;height:200px;border-radius:25px;padding:10px;box-sizing:border-box;}
+article > div{position:relative;}
+article > div >a{display:block;text-align:center;width:50px;height:50px;border-radius:50%;position:absolute;text-decoration:none;line-height:50px;background-color:lightgray;}
+a#start{bottom:0px;right:60px;}
+a#next{bottom:0px;right:0px;}
+a#reset{top:0px;right:60px;}
+a#clear{top:0px;right:0px;}
+ol{font-size:30px;}
+footer{position:fixed;bottom:0;width: 100%;height:20px;text-align:center;}
+body .en{display:none;}
+body.en .ja{display:none;}
+body.en .en{display:block;}
+</style>
+<script>
+var L=[],C=-1;
+function e(i){return document.getElementById(i);}
+function c(i,f){e(i).addEventListener('click',f);}
+function f(v,n,l){return v!==''&&l.indexOf(v)===n;}
+function l(){return e("member").value.split('\n').filter(f);}
+function r(){var l=e('list');while(l.firstChild) {l.removeChild(l.firstChild);}C=-1;return false;}
+function s(){L=l();var n=L.length,t,i;while(n){i=Math.floor(Math.random()*n--);t=L[n];L[n]=L[i];L[i]=t;}}
+function i(t){var i=document.createElement('li');i.appendChild(document.createTextNode(t));return i;}
+function a(t){e('list').appendChild(i(t));}
+function v(){r();s();for(C=0;C<L.length;++C){a(L[C]);}return false;}
+function n(){if(!++C){s();}if(L.length<=C){return;}a(L[C]);return false;}
+function d(){r();e("member").value='';return false;}
+function b(){try{if(window.navigator.userAgent.toLowerCase().indexOf('chrome')!=-1){return (navigator.languages[0]||navigator.browserLanguage||navigator.language||navigator.userLanguage).substr(0,2);}else{return (navigator.browserLanguage||navigator.language||navigator.userLanguage).substr(0,2);}}catch(e){return undefined;}}
+window.onload=function(){c('start',v);c('next',n);c('reset',r);c('clear',d);if(b()!=='ja'){getElementsByTagName('body')[0].classList.add('en');}}
+</script>
+</head>
+<body>
+  <div>
+    <header><h1>Ranso</h1></header>
+    <article>
+      <p class="ja">Ranso(らんそー)は入力欄に記入された項目をランダムに並び替えて表示するものです。発表順をランダムに決める際などにご利用ください。</p>
+      <p class="en">Ranso will sort the input items at random.</p>
+      <p class="ja">使い方は以下の通りです。</p>
+      <ul class="ja">
+        <li>All<ul><li>全てを並び替えて表示します。</li></ul></li>
+        <li>Next<ul><li>ボタンをクリックするたびに1件ずつ表示されます。</li></ul></li>
+        <li>Reset<ul><li>表示を消します。</li></ul></li>
+        <li>Clear<ul><li>表示と入力欄の中身を消します。</li></ul></li>
+      </ul>
+      <p class="en">How to use.</p>
+      <ul class="en">
+        <li>All<ul><li>Random sort &amp; print.</li></ul></li>
+        <li>Next<ul><li>Print next item.</li></ul></li>
+        <li>Reset<ul><li>Delete items.</li></ul></li>
+        <li>Clear<ul><li>Delete items &amp; clear input.</li></ul></li>
+      </ul>
+      <div>
+        <textarea id="member"></textarea>
+        <a href="javascript:void(0)" id="start">All</a>
+        <a href="javascript:void(0)" id="next">Next</a>
+        <a href="javascript:void(0)" id="reset">Reset</a>
+        <a href="javascript:void(0)" id="clear">Clear</a>
+      </div>
+      <ol id="list"></ol>
+    </article>
+    <footer>(C) Hiroki. <a href="https://github.com/HirokiMiyaoka/Ranso">GitHub</a></footer>
+  </div>
+</body>
+</html>
